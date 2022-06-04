@@ -1,7 +1,6 @@
 // import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/practice_grid.dart';
 import 'package:flutter_application_1/table_practice.dart';
 
 void main() {

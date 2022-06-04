@@ -25,12 +25,12 @@ class MyGrid extends State<PracticeGrid> {
               decoration: const BoxDecoration(color: Colors.green),
               alignment: Alignment.center,
               child: GridTile(
-                  child: Text("aaaa"),
                   footer: Center(
                     child: Text(
                       '$click $index',
                     ),
-                  )));
+                  ),
+                  child: const Text("aaaa")));
         }),
       ),
     );
