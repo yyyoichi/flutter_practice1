@@ -33,10 +33,10 @@ class _TableAppState extends State<TableApp> {
                 // height: 40.0,
                 child: Slider(
                   label: '$_num',
-                  min: 5,
-                  max: 10,
+                  min: 4,
+                  max: 9,
                   value: _num,
-                  divisions: 10,
+                  divisions: 5,
                   onChanged: _changeNumOfRow,
                 ),
               )
