@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'dart:math' as math;
+
 class RiverpodTableApp extends StatelessWidget {
   const RiverpodTableApp({Key? key}) : super(key: key);
   @override
@@ -30,14 +32,30 @@ class RiverpodTableState {
   final int numOfIsland;
   final List<int> positionsOfIsland;
   const RiverpodTableState(
-      {required this.numOfLines,
-      required this.numOfIsland,
-      required this.positionsOfIsland});
+      {this.numOfLines = 5,
+      this.numOfIsland = 0,
+      this.positionsOfIsland = const []});
   RiverpodTableState copyWith(
       {int? numOfLines, int? numOfIsland, List<int>? positionsOfIsland}) {
     return RiverpodTableState(
-      numOfLines: numOfLines ?? this.numOfLines,
-      numOfIsland: numOfIsland ?? this.numOfIsland,
-      positionsOfIsland: positionsOfIsland ?? this.positionsOfIsland);
+        numOfLines: numOfLines ?? this.numOfLines,
+        numOfIsland: numOfIsland ?? this.numOfIsland,
+        positionsOfIsland: positionsOfIsland ?? this.positionsOfIsland);
+  }
+}
+
+class RiverpodTableStateNotifier extends StateNotifier<RiverpodTableState> {
+  RiverpodTableStateNotifier() : super(const RiverpodTableState());
+  void onChangeLines(int num) {
+    state = state.copyWith(numOfLines: num);
+  }
+
+  void onChangeIsland(int num) {
+    List<int> posIsland = [];
+    for (var i = 0; i < num; i++) {
+      int r = math.Random().nextInt(state.numOfLines) + 1;
+      posIsland.add(r);
+    }
+    state = state.copyWith(numOfIsland: num, positionsOfIsland: posIsland);
   }
 }
