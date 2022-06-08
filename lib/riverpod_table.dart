@@ -59,3 +59,7 @@ class RiverpodTableStateNotifier extends StateNotifier<RiverpodTableState> {
     state = state.copyWith(numOfIsland: num, positionsOfIsland: posIsland);
   }
 }
+
+final riverpodTableProvider = StateNotifierProvider<RiverpodTableStateNotifier, RiverpodTableState>((ref) {
+  return RiverpodTableStateNotifier();
+});
