@@ -3,24 +3,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../game_setting.dart';
 
-class IslandNumSlider extends StatelessWidget {
-  const IslandNumSlider({Key? key}) : super(key: key);
+class LineNumSlider extends StatelessWidget {
+  const LineNumSlider({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: ((context, ref, child) {
       final notifier = ref.read(riverpodTableProvider.notifier);
-      final num = ref.watch(riverpodTableProvider.select((value) => value.numOfIsland));
+      final num = ref.watch(riverpodTableProvider.select((value) => value.numOfLines));
       return Container(
           margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-          // child: Text('$num aaa'));
           child: Slider(
-            label: '島の数: $num',
-            min: 0,
-            max: 10,
+            label: 'フィールド: $num',
+            min: 4,
+            max: 9,
             value: num.toDouble(),
-            divisions: 10,
-            // onChanged: notifier.onChangeLines,
-            onChanged: notifier.onChangeIsland,
+            divisions: 5,
+            onChanged: notifier.onChangeLines,
           ));
     }));
   }

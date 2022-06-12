@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/components/island.dart';
+import 'package:flutter_application_1/components/setting_field.dart';
+import 'package:flutter_application_1/components/line_num_slider.dart';
 import 'package:flutter_application_1/components/island_num_slider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,8 +20,13 @@ class GameSettingApp extends StatelessWidget {
               Expanded(
                   child: Container(
                 margin: const EdgeInsets.all(25.0),
-                child: const Island()
+                child: const SettingField()
               )),
+              Container(
+                margin: const EdgeInsets.symmetric(
+                    vertical: 30.0, horizontal: 25.0),
+                child: const LineNumSlider(),
+              ),
               Container(
                 margin: const EdgeInsets.symmetric(
                     vertical: 30.0, horizontal: 25.0),
@@ -32,13 +40,13 @@ class GameSettingApp extends StatelessWidget {
 class RiverpodTableState {
   final int numOfLines;
   final int numOfIsland;
-  final List<int> positionsOfIsland;
+  final Set<int> positionsOfIsland;
   const RiverpodTableState(
       {this.numOfLines = 5,
-      this.numOfIsland = 0,
-      this.positionsOfIsland = const []});
+      this.numOfIsland = 1,
+      this.positionsOfIsland = const <int>{}});
   RiverpodTableState copyWith(
-      {int? numOfLines, int? numOfIsland, List<int>? positionsOfIsland}) {
+      {int? numOfLines, int? numOfIsland, Set<int>? positionsOfIsland}) {
     return RiverpodTableState(
         numOfLines: numOfLines ?? this.numOfLines,
         numOfIsland: numOfIsland ?? this.numOfIsland,
@@ -56,9 +64,9 @@ class RiverpodTableStateNotifier extends StateNotifier<RiverpodTableState> {
 
   void onChangeIsland(double n) {
     int num = n.toInt();
-    List<int> posIsland = [];
-    for (var i = 0; i < num; i++) {
-      int r = math.Random().nextInt(state.numOfLines) + 1;
+    Set<int> posIsland = <int>{};
+    while (posIsland.length < num) {
+      int r = math.Random().nextInt(state.numOfLines * state.numOfLines);
       posIsland.add(r);
     }
     state = state.copyWith(numOfIsland: num, positionsOfIsland: posIsland);
