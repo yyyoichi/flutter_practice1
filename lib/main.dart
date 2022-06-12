@@ -1,7 +1,5 @@
-// import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/table_practice.dart';
+import 'package:flutter_application_1/game_setting.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +20,7 @@ class MyApp extends StatelessWidget {
       // theme: ThemeData.from(colorScheme: ColorScheme.fromSwatch(
       //   primarySwatch: Colors.brown,
       // )),
-      home: const TableApp(),
+      home: const GameSettingApp(),
     );
   }
 }

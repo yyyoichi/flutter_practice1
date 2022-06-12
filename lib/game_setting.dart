@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/components/riverpod_grid.dart';
-import 'package:flutter_application_1/components/riverpod_slider.dart';
+import 'package:flutter_application_1/components/island.dart';
+import 'package:flutter_application_1/components/island_num_slider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'dart:math' as math;
 
-class RiverpodTableApp extends StatelessWidget {
-  const RiverpodTableApp({Key? key}) : super(key: key);
+class GameSettingApp extends StatelessWidget {
+  const GameSettingApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ProviderScope(
@@ -17,12 +17,12 @@ class RiverpodTableApp extends StatelessWidget {
               Expanded(
                   child: Container(
                 margin: const EdgeInsets.all(25.0),
-                child: const RiverpodGrid()
+                child: const Island()
               )),
               Container(
                 margin: const EdgeInsets.symmetric(
                     vertical: 30.0, horizontal: 25.0),
-                child: const RiverpodSlider(),
+                child: const IslandNumSlider(),
               )
             ]))));
   }
@@ -48,7 +48,9 @@ class RiverpodTableState {
 
 class RiverpodTableStateNotifier extends StateNotifier<RiverpodTableState> {
   RiverpodTableStateNotifier() : super(const RiverpodTableState());
-  void onChangeLines(int num) {
+
+  void onChangeLines(double n) {
+    int num = n.toInt();
     state = state.copyWith(numOfLines: num);
   }
 
