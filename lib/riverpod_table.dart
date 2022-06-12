@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/components/riverpod_grid.dart';
+import 'package:flutter_application_1/components/riverpod_slider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'dart:math' as math;
@@ -15,12 +17,12 @@ class RiverpodTableApp extends StatelessWidget {
               Expanded(
                   child: Container(
                 margin: const EdgeInsets.all(25.0),
-                // child: RiverpodGrid(),
+                child: const RiverpodGrid()
               )),
               Container(
                 margin: const EdgeInsets.symmetric(
                     vertical: 30.0, horizontal: 25.0),
-                // child: RiverpodSlider(),
+                child: const RiverpodSlider(),
               )
             ]))));
   }
@@ -50,7 +52,8 @@ class RiverpodTableStateNotifier extends StateNotifier<RiverpodTableState> {
     state = state.copyWith(numOfLines: num);
   }
 
-  void onChangeIsland(int num) {
+  void onChangeIsland(double n) {
+    int num = n.toInt();
     List<int> posIsland = [];
     for (var i = 0; i < num; i++) {
       int r = math.Random().nextInt(state.numOfLines) + 1;
