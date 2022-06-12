@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/setting_field.dart';
 import 'package:flutter_application_1/components/line_num_slider.dart';
@@ -19,9 +17,8 @@ class GameSettingApp extends StatelessWidget {
                 child: Column(children: [
               Expanded(
                   child: Container(
-                margin: const EdgeInsets.all(25.0),
-                child: const SettingField()
-              )),
+                      margin: const EdgeInsets.all(25.0),
+                      child: const SettingField())),
               Container(
                 margin: const EdgeInsets.symmetric(
                     vertical: 30.0, horizontal: 25.0),
@@ -39,18 +36,20 @@ class GameSettingApp extends StatelessWidget {
 @immutable
 class RiverpodTableState {
   final int numOfLines;
-  final int numOfIsland;
   final Set<int> positionsOfIsland;
+  final int maxOfIsland;
+
   const RiverpodTableState(
       {this.numOfLines = 5,
-      this.numOfIsland = 1,
-      this.positionsOfIsland = const <int>{}});
+      this.positionsOfIsland = const <int>{3, 18},
+      this.maxOfIsland = 2});
   RiverpodTableState copyWith(
-      {int? numOfLines, int? numOfIsland, Set<int>? positionsOfIsland}) {
+      {int? numOfLines, Set<int>? positionsOfIsland, int? maxOfIsland}) {
     return RiverpodTableState(
-        numOfLines: numOfLines ?? this.numOfLines,
-        numOfIsland: numOfIsland ?? this.numOfIsland,
-        positionsOfIsland: positionsOfIsland ?? this.positionsOfIsland);
+      numOfLines: numOfLines ?? this.numOfLines,
+      positionsOfIsland: positionsOfIsland ?? this.positionsOfIsland,
+      maxOfIsland: maxOfIsland ?? this.maxOfIsland,
+    );
   }
 }
 
@@ -59,20 +58,39 @@ class RiverpodTableStateNotifier extends StateNotifier<RiverpodTableState> {
 
   void onChangeLines(double n) {
     int num = n.toInt();
-    state = state.copyWith(numOfLines: num);
+    int maxOfisland = getMaxIsland(num);
+    if (maxOfisland < state.positionsOfIsland.length) {
+      state = state.copyWith(
+          numOfLines: num, positionsOfIsland: _getPosIsland(maxOfisland, num), maxOfIsland: maxOfisland);
+    } else {
+      state = state.copyWith(numOfLines: num, maxOfIsland: maxOfisland);
+    }
   }
 
   void onChangeIsland(double n) {
     int num = n.toInt();
+    Set<int> posIsland = _getPosIsland(num, state.numOfLines);
+    state = state.copyWith( positionsOfIsland: posIsland);
+  }
+
+  Set<int> _getPosIsland(int num, int numOfLines) {
     Set<int> posIsland = <int>{};
     while (posIsland.length < num) {
-      int r = math.Random().nextInt(state.numOfLines * state.numOfLines);
+      int r = math.Random().nextInt(numOfLines * numOfLines);
       posIsland.add(r);
     }
-    state = state.copyWith(numOfIsland: num, positionsOfIsland: posIsland);
+    return posIsland;
+  }
+
+  int getMaxIsland(nowNumOfLines) {
+    final int numOfCeil = nowNumOfLines * nowNumOfLines;
+    final int limit = (numOfCeil * 0.1).floor();
+    return limit;
   }
 }
 
-final riverpodTableProvider = StateNotifierProvider<RiverpodTableStateNotifier, RiverpodTableState>((ref) {
+final riverpodTableProvider =
+    StateNotifierProvider<RiverpodTableStateNotifier, RiverpodTableState>(
+        (ref) {
   return RiverpodTableStateNotifier();
 });
