@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/components/go_to_game.dart';
 import 'package:flutter_application_1/components/setting_field.dart';
 import 'package:flutter_application_1/components/line_num_slider.dart';
 import 'package:flutter_application_1/components/island_num_slider.dart';
@@ -19,6 +20,7 @@ class GameSettingApp extends StatelessWidget {
                   child: Container(
                       margin: const EdgeInsets.all(25.0),
                       child: const SettingField())),
+              const GoToGame(),
               Container(
                 margin: const EdgeInsets.symmetric(
                     vertical: 30.0, horizontal: 25.0),
@@ -61,7 +63,9 @@ class RiverpodTableStateNotifier extends StateNotifier<RiverpodTableState> {
     int maxOfisland = getMaxIsland(num);
     if (maxOfisland < state.positionsOfIsland.length) {
       state = state.copyWith(
-          numOfLines: num, positionsOfIsland: _getPosIsland(maxOfisland, num), maxOfIsland: maxOfisland);
+          numOfLines: num,
+          positionsOfIsland: _getPosIsland(maxOfisland, num),
+          maxOfIsland: maxOfisland);
     } else {
       state = state.copyWith(numOfLines: num, maxOfIsland: maxOfisland);
     }
@@ -70,7 +74,7 @@ class RiverpodTableStateNotifier extends StateNotifier<RiverpodTableState> {
   void onChangeIsland(double n) {
     int num = n.toInt();
     Set<int> posIsland = _getPosIsland(num, state.numOfLines);
-    state = state.copyWith( positionsOfIsland: posIsland);
+    state = state.copyWith(positionsOfIsland: posIsland);
   }
 
   Set<int> _getPosIsland(int num, int numOfLines) {

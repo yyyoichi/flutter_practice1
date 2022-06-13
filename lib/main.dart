@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/game.dart';
 import 'package:flutter_application_1/game_setting.dart';
 
 void main() {
@@ -20,7 +21,12 @@ class MyApp extends StatelessWidget {
       // theme: ThemeData.from(colorScheme: ColorScheme.fromSwatch(
       //   primarySwatch: Colors.brown,
       // )),
-      home: const GameSettingApp(),
+      // home: const GameSettingApp(),
+      initialRoute: "/",
+      routes: {
+        "/" : (context) => const GameSettingApp(),
+        "/game": (context) => const Game()
+      }
     );
   }
 }
