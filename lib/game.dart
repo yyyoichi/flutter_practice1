@@ -3,7 +3,9 @@ import 'package:flutter_application_1/game_setting.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Game extends StatelessWidget {
-  const Game({Key? key}) : super(key: key);
+  Game({Key? key}) : super(key: key);
+  final numOfLines = 5;
+  final positionsOfIsland = [7, 16];
   @override
   Widget build(BuildContext context) {
     return ProviderScope(
