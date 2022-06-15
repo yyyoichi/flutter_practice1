@@ -9,8 +9,8 @@ class SettingField extends StatelessWidget {
     return Consumer(builder: ((context, ref, child) {
       final num = ref.watch(riverpodTableProvider.select((state) => state.numOfLines));
       final posIslands = ref.watch(riverpodTableProvider.select((state) => state.positionsOfIsland));
-      const sea = Color.fromARGB(255, 130, 132, 156);
-      const island = Color.fromARGB(255, 15, 29, 17);
+      const sea = Color.fromARGB(255, 131, 134, 172);
+      const island = Color.fromARGB(255, 28, 54, 32);
       return GridView.count(
         crossAxisCount: num,
         crossAxisSpacing: 4.0,
