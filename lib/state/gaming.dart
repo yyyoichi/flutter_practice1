@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @immutable
 class Gaming {
@@ -20,8 +21,16 @@ class Gaming {
 }
 
 class History {
-  final int direction ;
+  final int direction;
   final String type;
   final int position;
   History(this.direction, this.type, this.position);
 }
+
+class GameNotifier extends StateNotifier<Gaming> {
+  GameNotifier() : super(const Gaming());
+}
+
+final gameStateProvider = StateNotifierProvider<GameNotifier, Gaming>((ref) {
+  return GameNotifier();
+});
