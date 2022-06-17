@@ -29,6 +29,12 @@ class History {
 
 class GameNotifier extends StateNotifier<Gaming> {
   GameNotifier() : super(const Gaming());
+  void onChangePlayer() {
+    state.copyWith(
+      isA: !state.isA,
+      isLoading: !state.isLoading
+    );
+  }
 }
 
 final gameStateProvider = StateNotifierProvider<GameNotifier, Gaming>((ref) {
