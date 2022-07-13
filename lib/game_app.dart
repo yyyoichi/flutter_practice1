@@ -34,23 +34,4 @@ class GameApp extends StatelessWidget {
   }
 }
 
-@immutable
-class RiverpodTableState {
-  final int numOfLines;
-  final Set<int> positionsOfIsland;
-  final int maxOfIsland;
-
-  const RiverpodTableState(
-      {this.numOfLines = 5,
-      this.positionsOfIsland = const <int>{3, 18},
-      this.maxOfIsland = 2});
-  RiverpodTableState copyWith(
-      {int? numOfLines, Set<int>? positionsOfIsland, int? maxOfIsland}) {
-    return RiverpodTableState(
-      numOfLines: numOfLines ?? this.numOfLines,
-      positionsOfIsland: positionsOfIsland ?? this.positionsOfIsland,
-      maxOfIsland: maxOfIsland ?? this.maxOfIsland,
-    );
-  }
-}
 
