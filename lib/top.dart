@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/game_setting.dart';
+import 'package:flutter_application_1/game_app.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Game extends StatelessWidget {
-  Game({Key? key}) : super(key: key);
+class Top extends StatelessWidget {
+  Top({Key? key}) : super(key: key);
   final numOfLines = 5;
   final positionsOfIsland = [7, 16];
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../game_setting.dart';
+import '../game_app.dart';
 
 class IslandNumSlider extends StatelessWidget {
   const IslandNumSlider({Key? key}) : super(key: key);

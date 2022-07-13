@@ -7,8 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'dart:math' as math;
 
-class GameSettingApp extends StatelessWidget {
-  const GameSettingApp({Key? key}) : super(key: key);
+class GameApp extends StatelessWidget {
+  const GameApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ProviderScope(

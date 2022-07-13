@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/game.dart';
-import 'package:flutter_application_1/game_setting.dart';
+import 'package:flutter_application_1/top.dart';
+import 'package:flutter_application_1/game_app.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
       // home: const GameSettingApp(),
       initialRoute: "/",
       routes: {
-        "/" : (context) => const GameSettingApp(),
-        "/game": (context) => Game()
+        "/game" : (context) => const GameApp(),
+        "/": (context) => Top()
       }
     );
   }
