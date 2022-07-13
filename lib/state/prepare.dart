@@ -2,7 +2,25 @@ import 'dart:math' as math;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../game_app.dart';
+class RiverpodTableState {
+  final int numOfLines;
+  final Set<int> positionsOfIsland;
+  final int maxOfIsland;
+
+  const RiverpodTableState(
+      {this.numOfLines = 5,
+      this.positionsOfIsland = const <int>{3, 18},
+      this.maxOfIsland = 2});
+  RiverpodTableState copyWith(
+      {int? numOfLines, Set<int>? positionsOfIsland, int? maxOfIsland}) {
+    return RiverpodTableState(
+      numOfLines: numOfLines ?? this.numOfLines,
+      positionsOfIsland: positionsOfIsland ?? this.positionsOfIsland,
+      maxOfIsland: maxOfIsland ?? this.maxOfIsland,
+    );
+  }
+}
+
 class RiverpodTableStateNotifier extends StateNotifier<RiverpodTableState> {
   RiverpodTableStateNotifier() : super(const RiverpodTableState());
 
