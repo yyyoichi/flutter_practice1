@@ -11,17 +11,15 @@ class GoToGame extends StatelessWidget {
     return Consumer(builder: ((context, ref, child) {
       final num = ref.watch(riverpodTableProvider.select((value) => value.numOfLines));
       final position = ref.watch(riverpodTableProvider.select((value) => value.positionsOfIsland));
-      return Container(
-          margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
-          child: TextButton(
-              child: const Text("next =>"),
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  '/game',
-                  arguments: GameParameter(numOfLines: num, positionsOfIsland: position),
-                );
-              }));
+      return TextButton(
+          child: const Text("next =>"),
+          onPressed: () {
+            Navigator.pushNamed(
+              context,
+              '/game',
+              arguments: GameParameter(numOfLines: num, positionsOfIsland: position),
+            );
+          });
     }));
   }
 }

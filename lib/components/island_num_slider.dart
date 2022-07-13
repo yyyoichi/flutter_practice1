@@ -12,16 +12,14 @@ class IslandNumSlider extends StatelessWidget {
       final notifier = ref.read(riverpodTableProvider.notifier);
       final maxIsland = ref.watch(riverpodTableProvider.select((state) => state.maxOfIsland));
       final num = ref.watch(riverpodTableProvider.select((state) => state.positionsOfIsland)).length;
-      return Container(
-          margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-          child: Slider(
-            label: '島の数: $num',
-            min: 0,
-            max: maxIsland.toDouble(),
-            value: num.toDouble(),
-            divisions: maxIsland.toInt(),
-            onChanged: notifier.onChangeIsland,
-          ));
+      return Slider(
+        label: '島の数: $num',
+        min: 0,
+        max: maxIsland.toDouble(),
+        value: num.toDouble(),
+        divisions: maxIsland.toInt(),
+        onChanged: notifier.onChangeIsland,
+      );
     }));
   }
 }

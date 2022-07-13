@@ -19,14 +19,14 @@ class GameSetting extends StatelessWidget {
         child: Column(children: [
       Expanded(
           child: Container(
-              margin: const EdgeInsets.all(25.0), child: const SettingField())),
+              margin: const EdgeInsets.all(5.0), child: const SettingField())),
       const GoToGame(),
       Container(
-        margin: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 25.0),
+        margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 3.0),
         child: const LineNumSlider(),
       ),
       Container(
-        margin: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 25.0),
+        margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 3.0),
         child: const IslandNumSlider(),
       )
     ]))));

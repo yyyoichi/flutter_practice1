@@ -14,8 +14,8 @@ class SettingField extends StatelessWidget {
       const island = Color.fromARGB(255, 28, 54, 32);
       return GridView.count(
         crossAxisCount: num,
-        crossAxisSpacing: 4.0,
-        mainAxisSpacing: 4.0,
+        crossAxisSpacing: 3.0,
+        mainAxisSpacing: 3.0,
         children: List.generate(num * num, (index) {
           return Container(
             color: posIslands.contains(index) ? island: sea,

@@ -11,16 +11,14 @@ class LineNumSlider extends StatelessWidget {
     return Consumer(builder: ((context, ref, child) {
       final notifier = ref.read(riverpodTableProvider.notifier);
       final num = ref.watch(riverpodTableProvider.select((value) => value.numOfLines));
-      return Container(
-          margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-          child: Slider(
-            label: 'フィールド: $num',
-            min: 4,
-            max: 9,
-            value: num.toDouble(),
-            divisions: 5,
-            onChanged: notifier.onChangeLines,
-          ));
+      return Slider(
+        label: 'フィールド: $num',
+        min: 4,
+        max: 9,
+        value: num.toDouble(),
+        divisions: 5,
+        onChanged: notifier.onChangeLines,
+      );
     }));
   }
 }
