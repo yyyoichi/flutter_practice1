@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/game_setting.dart';
+import 'package:flutter_application_1/state/game_parameter.dart';
 import 'package:flutter_application_1/top.dart';
 import 'package:flutter_application_1/pages/game_app.dart';
 
@@ -24,14 +25,30 @@ class MyApp extends StatelessWidget {
       // )),
       // home: const GameSettingApp(),
       initialRoute: "/game",
-      routes: {
-        "/game" : (context) =>const GameApp(),
-        "/set": (context) => const GameSetting(),
-        "/": (context) => Top()
-      },
+      onGenerateRoute: RouteGenerator.generateRoute,
       // onGenerateRoute: (RouteSettings settings){
       //   if(setting.)
       // },
     );
   }
 }
+
+class RouteGenerator {
+  static Route<dynamic> generateRoute(RouteSettings settings) {
+    final args = settings.arguments;
+    switch (settings.name) {
+      case '/':
+        return MaterialPageRoute(builder: (_) => Top());
+      case '/game':
+        return MaterialPageRoute(
+          builder: (_) => GameApp(args: args is! GameParameter  ? const GameParameter() : args),
+        );
+      case '/set':
+        return MaterialPageRoute(builder: (_) => const GameSetting());
+      default :
+        return MaterialPageRoute(builder: (_) => Top());
+    }
+  }
+}
+
+
