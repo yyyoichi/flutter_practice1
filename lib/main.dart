@@ -28,7 +28,10 @@ class MyApp extends StatelessWidget {
         "/game" : (context) =>const GameApp(),
         "/set": (context) => const GameSetting(),
         "/": (context) => Top()
-      }
+      },
+      // onGenerateRoute: (RouteSettings settings){
+      //   if(setting.)
+      // },
     );
   }
 }
