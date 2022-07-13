@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/game_setting.dart';
 import 'package:flutter_application_1/top.dart';
 import 'package:flutter_application_1/pages/game_app.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
   runApp(const MyApp());
