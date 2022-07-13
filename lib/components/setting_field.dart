@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_application_1/game_app.dart';
+
+import '../state/prepare.dart';
 
 class SettingField extends StatelessWidget {
   const SettingField({Key? key}) : super(key: key);

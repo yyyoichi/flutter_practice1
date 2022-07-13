@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/game_app.dart';
+import 'package:flutter_application_1/state/prepare.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Top extends StatelessWidget {
