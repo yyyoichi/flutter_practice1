@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/game_setting.dart';
 import 'package:flutter_application_1/state/game_parameter.dart';
-import 'package:flutter_application_1/top.dart';
+import 'package:flutter_application_1/pages/top.dart';
 import 'package:flutter_application_1/pages/game_app.dart';
 
 void main() {
