@@ -11,6 +11,11 @@ class GameSetting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProviderScope(
+      child: Scaffold(
+      appBar: AppBar(
+        title: const Text('game setting'),
+      ),
+      body: Center(
         child: Column(children: [
       Expanded(
           child: Container(
@@ -24,6 +29,6 @@ class GameSetting extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 25.0),
         child: const IslandNumSlider(),
       )
-    ]));
+    ]))));
   }
 }
