@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/top.dart';
 import 'package:flutter_application_1/game_app.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       // home: const GameSettingApp(),
       initialRoute: "/",
       routes: {
-        "/game" : (context) => const GameApp(),
+        "/game" : (context) =>const ProviderScope(child: GameApp()),
         "/": (context) => Top()
       }
     );
