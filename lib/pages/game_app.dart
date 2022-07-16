@@ -18,17 +18,24 @@ class GameApp extends StatelessWidget {
       return Scaffold(
           appBar: AppBar(title: const Text("Reverpod.")),
           body: Center(
-              child: GridView.count(
-            crossAxisCount: num,
-            crossAxisSpacing: 3.0,
-            mainAxisSpacing: 3.0,
-            children: List.generate(num*num, (index) {
-              return Container(
-                color: posIslands.contains(index) ? island : sea,
-                width: 50.0,
-                height: 50.0,
-              );
-            }),
+              child: Column(
+            children: [
+              Expanded(
+                  child: Container(
+                      margin: const EdgeInsets.all(5.0),
+                      child: GridView.count(
+                        crossAxisCount: num,
+                        crossAxisSpacing: 3.0,
+                        mainAxisSpacing: 3.0,
+                        children: List.generate(num * num, (index) {
+                          return Container(
+                            color: posIslands.contains(index) ? island : sea,
+                            width: 50.0,
+                            height: 50.0,
+                          );
+                        }),
+                      )))
+            ],
           )));
     });
   }
