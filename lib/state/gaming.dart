@@ -5,30 +5,31 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class Gaming {
   final bool isA;
   final bool isLoading;
-  final List<History> histories;
+  final List<History> aHistories;
+  final List<History> bHistories;
 
   const Gaming(
       {this.isA = true,
       this.isLoading = false,
-      this.histories = const <History>[]});
+      this.aHistories = const <History>[],
+      this.bHistories = const <History>[]});
 
-  Gaming copyWith({bool? isA, bool? isLoading, List<History>? histories}) {
+  Gaming copyWith({bool? isA, bool? isLoading, List<History>? aHistories, List<History>? bHistories}) {
     return Gaming(
         isA: isA ?? this.isA,
         isLoading: isLoading ?? this.isLoading,
-        histories: histories ?? this.histories);
+        aHistories: aHistories ?? this.aHistories,
+        bHistories: bHistories ?? this.bHistories);
   }
 }
 
 class History {
   /// 進んだ方向を表す（0~8, !=4）
   final Position direction;
-
   /// "attack" or "move"
   final String type;
   /// 行動距離
   final int step;
-
   /// board index( "0,0" )
   final Position position;
   final bool isA;
@@ -55,9 +56,9 @@ class Position {
   final int row;
   final int column;
   Position(this.row, this.column);
-  _nextTo({required Position direction, int howMany = 1}) {
-    int r = row + (direction.row * howMany);
-    int c = column + (direction.column * howMany);
+  nextTo({required Direction direction, int howMany = 1}) {
+    int r = row + (direction.x * howMany);
+    int c = column + (direction.y * howMany);
     return Position(r, c);
   }
 
@@ -73,7 +74,23 @@ class GameNotifier extends StateNotifier<Gaming> {
     state.copyWith(isA: !state.isA, isLoading: !state.isLoading);
   }
 
-  bool canPut() {
+  Future<bool> canPut(int row, int column, int step) async {
+    int length = state.isA ? state.aHistories.length : state.bHistories.length;
+    if(length == 0 ) return true;// game 初めならどこでもOK
+    /// 移動したい場所
+    Position nextPosition = Position(row, column);
+    /// 移動前の履歴
+    History latestHistory = state.isA ? state.aHistories[length - 1] : state.bHistories[length - 1];
+    Position latestPosition = latestHistory.position;
+    /// 移動可能な方向を順に取得
+    await for(Direction d in Direction.getAll()) {
+      /// 行動前の場所からある方向にstepだけ進んだ位置を取得
+      Position p = latestPosition.nextTo(direction: d, howMany: step);
+      /// 移動したい場所と一致すれば
+      if(nextPosition.equals(p)) {
+        return true;
+      }
+    }
     return false;
   }
 }
