@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/components/empty_app_bar.dart';
 import 'package:flutter_application_1/state/game_parameter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,7 +17,7 @@ class GameApp extends StatelessWidget {
       const sea = Color.fromARGB(255, 131, 134, 172);
       const island = Color.fromARGB(255, 28, 54, 32);
       return Scaffold(
-          appBar: AppBar(title: const Text("Reverpod.")),
+          appBar: const EmptyAppBar(),
           body: Center(
               child: Column(
             children: [

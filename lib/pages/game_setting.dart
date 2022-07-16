@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../components/empty_app_bar.dart';
 import '../components/go_to_game.dart';
 import '../components/island_num_slider.dart';
 import '../components/line_num_slider.dart';
@@ -12,9 +13,7 @@ class GameSetting extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProviderScope(
       child: Scaffold(
-      appBar: AppBar(
-        title: const Text('game setting'),
-      ),
+      appBar: const EmptyAppBar(),
       body: Center(
         child: Column(children: [
       Expanded(
