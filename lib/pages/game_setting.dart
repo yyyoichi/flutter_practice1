@@ -12,22 +12,24 @@ class GameSetting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProviderScope(
-      child: Scaffold(
-      appBar: const EmptyAppBar(),
-      body: Center(
-        child: Column(children: [
-      Expanded(
-          child: Container(
-              margin: const EdgeInsets.all(5.0), child: const SettingField())),
-      const GoToGame(),
-      Container(
-        margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 3.0),
-        child: const LineNumSlider(),
-      ),
-      Container(
-        margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 3.0),
-        child: const IslandNumSlider(),
-      )
-    ]))));
+        child: Scaffold(
+            appBar: const EmptyAppBar(),
+            body: Center(
+                child: Column(children: [
+              Container(
+                  margin: const EdgeInsets.all(5.0),
+                  child: const Expanded(child: SettingField())),
+              const GoToGame(),
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(vertical: 5.0, horizontal: 3.0),
+                child: const LineNumSlider(),
+              ),
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(vertical: 5.0, horizontal: 3.0),
+                child: const IslandNumSlider(),
+              )
+            ]))));
   }
 }
