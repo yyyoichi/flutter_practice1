@@ -99,10 +99,13 @@ class Position {
 class GameNotifier extends StateNotifier<Gaming> {
   GameNotifier() : super(const Gaming());
   void closeLoading() {
-    state = state.copyWith(isLoading: !state.isLoading);
+    state = state.copyWith(isLoading: false);
+  }
+  void changePlayer() {
+    state = state.copyWith(isLoading: !state.isLoading, isA: !state.isA);
   }
 
-  void put(int row, int column, int step) async {
+  Future<bool> put(int row, int column, int step) async {
     Direction direction;
     Position position = Position(row, column);
     History? prevHistory = _getLatestMoveHistory();
@@ -110,13 +113,13 @@ class GameNotifier extends StateNotifier<Gaming> {
       direction = Direction(0, 0);
     } else {
       /// 過去に移動した履歴がある
-      debugPrint("privHistory: ${prevHistory.toString()}");
       Position prevPosition = prevHistory.position;
-      direction = prevPosition.wayFrom(pos: position);
       if(await _canPut(position, prevPosition, step) == false) {
         // 置けない
-        return;
+        return false;
       }
+      direction = prevPosition.wayFrom(pos: position);
+      debugPrint("privHistory: ${prevHistory.toString()}");
     }
     String type = "move";
     bool isA = state.isA;
@@ -125,18 +128,13 @@ class GameNotifier extends StateNotifier<Gaming> {
     if (isA) {
       List<History> histories = [...state.aHistories];
       histories.insert(0, history);
-      state = state.copyWith(
-          isA: !isA,
-          isLoading: !state.isLoading,
-          aHistories: histories);
+      state = state.copyWith(aHistories: histories);
     } else {
       List<History> histories = [...state.bHistories];
       histories.insert(0, history);
-      state = state.copyWith(
-          isA: !isA,
-          isLoading: !state.isLoading,
-          bHistories: histories);
+      state = state.copyWith(bHistories: histories);
     }
+    return true;
   }
 
   History? _getLatestMoveHistory() {

@@ -23,12 +23,17 @@ class Board extends StatelessWidget {
           final row = index ~/ numOfLines;
           final isIaland = posIslands.contains(index);
           return GestureDetector(
-            onTap: () {
+            onTap: () async {
               if(isIaland) {
                 //島はタップ無効
                 return ;
               }
-              notifier.put(row, column, 1);
+              bool result = await notifier.put(row, column, 1);
+              if(result) {
+                notifier.changePlayer();
+              } else {
+                debugPrint("\t 置けない場所です!");
+              }
             },
             child: Container(
               color: isIaland ? island : sea,
