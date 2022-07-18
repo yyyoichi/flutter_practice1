@@ -12,27 +12,34 @@ class Gaming {
       this.isLoading = false,
       this.histories = const <History>[]});
 
-  Gaming copyWith(
-      {bool? isA,
-      bool? isLoading,
-      List<History>? histories}) {
+  Gaming copyWith({bool? isA, bool? isLoading, List<History>? histories}) {
     return Gaming(
         isA: isA ?? this.isA,
         isLoading: isLoading ?? this.isLoading,
         histories: histories ?? this.histories);
   }
-  History? getLatestMoveHistory() {
+
+  History? getLatestMoveHistory({bool opponent = false}) {
+    bool isTarget(History h) {
+      /// 相手のHistoryを取得する
+      if (opponent) return h.isA != isA;
+
+      /// 自分のHistoryを取得する
+      return h.isA == isA;
+    }
+
     /// 移動前の履歴
     for (History hist in histories) {
-      if (hist.isA == isA && hist.type == "move") {
+      if (isTarget(hist) && hist.type == "move") {
         return hist;
       }
     }
     return null;
   }
+
   bool isNowPosition(int row, int column) {
     History? history = getLatestMoveHistory();
-    if(history == null) {
+    if (history == null) {
       return false;
     }
     Position targetPosition = Position(row, column);
@@ -58,7 +65,7 @@ class History {
   const History(this.direction, this.type, this.position, this.isA, this.step);
   @override
   String toString() {
-    return "player: ${isA ? "A": "B"}, type: $type, position: (${position.row},${position.column}), direction: (${direction.x},${direction.y})";
+    return "player: ${isA ? "A" : "B"}, type: $type, position: (${position.row},${position.column}), direction: (${direction.x},${direction.y})";
   }
 }
 
@@ -115,11 +122,12 @@ class GameNotifier extends StateNotifier<Gaming> {
   void closeLoading() {
     state = state.copyWith(isLoading: false);
   }
+
   void changePlayer() {
     state = state.copyWith(isLoading: !state.isLoading, isA: !state.isA);
   }
 
-  Future<bool> put(int row, int column, int step) async {
+  Future<bool> put(int row, int column, String type, int step) async {
     Direction direction;
     Position position = Position(row, column);
     History? prevHistory = state.getLatestMoveHistory();
@@ -128,22 +136,23 @@ class GameNotifier extends StateNotifier<Gaming> {
     } else {
       /// 過去に移動した履歴がある
       Position prevPosition = prevHistory.position;
-      if(await _canPut(position, prevPosition, step) == false) {
+      if (await _nextPut(position, prevPosition, step) == false) {
         // 置けない
         return false;
       }
       direction = prevPosition.wayFrom(pos: position);
       debugPrint("privHistory: ${prevHistory.toString()}");
     }
-    String type = "move";
     bool isA = state.isA;
     History history = History(direction, type, position, isA, step);
     debugPrint("newHistory: ${history.toString()}");
     state = state.copyWith(histories: [history, ...state.histories]);
     return true;
   }
-   /// 移動可能な場所かを返す
-  Future<bool> _canPut(Position nextPosition, Position prevPosition, int step) async {
+
+  /// [step]だけ離れている関係性であるかを返す
+  Future<bool> _nextPut(
+      Position nextPosition, Position prevPosition, int step) async {
     /// 移動可能な方向を順に取得
     await for (Direction d in Direction.getAll()) {
       /// 行動前の場所からある方向にstepだけ進んだ位置を取得
@@ -155,6 +164,15 @@ class GameNotifier extends StateNotifier<Gaming> {
       }
     }
     return false;
+  }
+
+  Future<String> atackResulut(int row, int column) async {
+    History? optHistory = state.getLatestMoveHistory(opponent: true);
+    if (optHistory == null) return "";
+    Position position = Position(row, column);
+    if (position.equals(optHistory.position)) return "over";
+    if (await _nextPut(position, optHistory.position, 1)) return "near";
+    return "";
   }
 }
 

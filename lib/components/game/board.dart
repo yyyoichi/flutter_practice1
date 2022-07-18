@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_application_1/state/gaming.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -7,7 +7,6 @@ class Board extends StatelessWidget {
       : super(key: key);
   final int numOfLines;
   final Set<int> posIslands;
-
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: ((context, ref, child) {
@@ -15,7 +14,8 @@ class Board extends StatelessWidget {
       const sea = Color.fromARGB(255, 131, 134, 172);
       const island = Color.fromRGBO(28, 54, 32, 1);
       final notifier = ref.read(gameStateProvider.notifier);
-      final isNowPosition = ref.watch(gameStateProvider.select((value) => value.isNowPosition));
+      final isNowPosition =
+          ref.watch(gameStateProvider.select((value) => value.isNowPosition));
       return GridView.count(
         crossAxisCount: numOfLines,
         crossAxisSpacing: 3.0,
@@ -25,17 +25,54 @@ class Board extends StatelessWidget {
           final row = index ~/ numOfLines;
           final isIaland = posIslands.contains(index);
           return GestureDetector(
-            onTap: () async {
-              if (isIaland) {
-                //島はタップ無効
-                return;
-              }
-              bool result = await notifier.put(row, column, 1);
-              if (result) {
-                notifier.changePlayer();
-              } else {
-                debugPrint("\t 置けない場所です!");
-              }
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (childContext) {
+                    return SimpleDialog(
+                      title: const Text("action"),
+                      children: [
+                        SimpleDialogOption(
+                          child: const Text("move"),
+                          onPressed: () {
+                            void action() async {
+                              if (isIaland) return;
+                              bool success =
+                                  await notifier.put(row, column, "move", 1);
+                              if (success) {
+                                notifier.changePlayer();
+                              }
+                            }
+                            Navigator.pop(childContext);
+                            action();
+                          },
+                        ),
+                        SimpleDialogOption(
+                          child: const Text("atack"),
+                          onPressed: () {
+                            void action() async {
+                              if (isIaland) return;
+                              bool success =
+                                  await notifier.put(row, column, "atack", 1);
+                              if (!success) return;
+                              String atackResult =
+                                  await notifier.atackResulut(row, column);
+                              if (atackResult == "over") {
+                                debugPrint("直撃！");
+                              } else if (atackResult == "near") {
+                                debugPrint("面舵一杯！");
+                              } else {
+                                debugPrint("ヨーソロー！");
+                              }
+                              notifier.changePlayer();
+                            }
+                            Navigator.pop(childContext);
+                            action();
+                          },
+                        )
+                      ],
+                    );
+                  });
             },
             child: Container(
               color: isNowPosition(row, column)
