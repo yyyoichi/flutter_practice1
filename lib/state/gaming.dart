@@ -102,16 +102,21 @@ class GameNotifier extends StateNotifier<Gaming> {
     state = state.copyWith(isLoading: !state.isLoading);
   }
 
-  void put(int row, int column, int step) {
+  void put(int row, int column, int step) async {
     Direction direction;
     Position position = Position(row, column);
     History? prevHistory = _getLatestMoveHistory();
     if (prevHistory == null) {
       direction = Direction(0, 0);
     } else {
+      /// 過去に移動した履歴がある
       debugPrint("privHistory: ${prevHistory.toString()}");
       Position prevPosition = prevHistory.position;
       direction = prevPosition.wayFrom(pos: position);
+      if(await _canPut(position, prevPosition, step) == false) {
+        // 置けない
+        return;
+      }
     }
     String type = "move";
     bool isA = state.isA;
@@ -144,19 +149,12 @@ class GameNotifier extends StateNotifier<Gaming> {
     }
     return null;
   }
-
-  Future<bool> canPut(int row, int column, int step) async {
-    /// 移動したい場所
-    Position nextPosition = Position(row, column);
-    /// 移動前の履歴
-    History? latestHistory = _getLatestMoveHistory();
-    if(latestHistory == null) return true;
-    Position latestPosition = latestHistory.position;
-
+  /// 移動可能な場所かを返す
+  Future<bool> _canPut(Position nextPosition, Position prevPosition, int step) async {
     /// 移動可能な方向を順に取得
     await for (Direction d in Direction.getAll()) {
       /// 行動前の場所からある方向にstepだけ進んだ位置を取得
-      Position p = latestPosition.nextTo(direction: d, howMany: step);
+      Position p = prevPosition.nextTo(direction: d, howMany: step);
 
       /// 移動したい場所と一致すれば
       if (nextPosition.equals(p)) {
