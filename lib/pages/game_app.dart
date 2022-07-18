@@ -12,18 +12,21 @@ class GameApp extends StatelessWidget {
   final GameParameter args;
   @override
   Widget build(BuildContext context) {
-    return Consumer(builder: (context, ref, child) {
-      return Scaffold(
-          appBar: const EmptyAppBar(),
-          body: Center(
-              child: Column(
-            children: [
-              Expanded(
-                  child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-                      child: Board(numOfLines: args.numOfLines, posIslands: args.positionsOfIsland,)))
-            ],
-          )));
-    });
+    return ProviderScope(
+        child: Scaffold(
+            appBar: const EmptyAppBar(),
+            body: Center(
+                child: Column(
+              children: [
+                Expanded(
+                    child: Container(
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 15.0),
+                        child: Board(
+                          numOfLines: args.numOfLines,
+                          posIslands: args.positionsOfIsland,
+                        )))
+              ],
+            ))));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application_1/state/gaming.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Board extends StatelessWidget {
@@ -12,15 +13,29 @@ class Board extends StatelessWidget {
     return Consumer(builder: ((context, ref, child) {
       const sea = Color.fromARGB(255, 131, 134, 172);
       const island = Color.fromARGB(255, 28, 54, 32);
+      final notifier = ref.watch(gameStateProvider.notifier);
       return GridView.count(
         crossAxisCount: numOfLines,
         crossAxisSpacing: 3.0,
         mainAxisSpacing: 3.0,
         children: List.generate(numOfLines * numOfLines, (index) {
-          return Container(
-            color: posIslands.contains(index) ? island : sea,
-            width: 50.0,
-            height: 50.0,
+          final row = index % numOfLines;
+          final column = index - (row * numOfLines);
+          final isIaland = posIslands.contains(index);
+          return GestureDetector(
+            onTap: () async {
+              if(isIaland) {
+                debugPrint("置けない!");
+                return ;
+              }
+              final flag = await notifier.canPut(row, column, 1);
+              debugPrint(flag ? "置ける！": "置けない!");
+            },
+            child: Container(
+              color: isIaland ? island : sea,
+              width: 50.0,
+              height: 50.0,
+            ),
           );
         }),
       );
