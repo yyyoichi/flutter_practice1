@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/empty_app_bar.dart';
 import 'package:flutter_application_1/components/game/board.dart';
+import 'package:flutter_application_1/components/game/to_next_player.dart';
 import 'package:flutter_application_1/state/game_parameter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,9 +16,8 @@ class GameApp extends StatelessWidget {
     return ProviderScope(
         child: Scaffold(
             appBar: const EmptyAppBar(),
-            body: Center(
-                child: Column(
-              children: [
+            body: Stack(children: [
+              Column(children: [
                 Expanded(
                     child: Container(
                         margin: const EdgeInsets.symmetric(
@@ -25,8 +25,9 @@ class GameApp extends StatelessWidget {
                         child: Board(
                           numOfLines: args.numOfLines,
                           posIslands: args.positionsOfIsland,
-                        )))
-              ],
-            ))));
+                        ))),
+              ]),
+              const ToNextPlayer()
+            ])));
   }
 }
