@@ -19,17 +19,20 @@ class Board extends StatelessWidget {
         crossAxisSpacing: 3.0,
         mainAxisSpacing: 3.0,
         children: List.generate(numOfLines * numOfLines, (index) {
-          final row = index % numOfLines;
-          final column = index - (row * numOfLines);
+          final column = index % numOfLines;
+          final row = index ~/ numOfLines;
           final isIaland = posIslands.contains(index);
           return GestureDetector(
             onTap: () async {
-              if(isIaland) {
+              if (isIaland) {
                 debugPrint("置けない!");
-                return ;
+                return;
               }
               final flag = await notifier.canPut(row, column, 1);
-              debugPrint(flag ? "置ける！": "置けない!");
+              debugPrint(flag ? "置ける！" : "置けない!");
+              if (flag) {
+                notifier.put(row, column, 1);
+              }
             },
             child: Container(
               color: isIaland ? island : sea,
