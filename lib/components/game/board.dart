@@ -13,8 +13,8 @@ class Board extends StatelessWidget {
     return Consumer(builder: ((context, ref, child) {
       const now = Color.fromRGBO(190, 40, 30, 1);
       const sea = Color.fromARGB(255, 131, 134, 172);
-      const island = Color.fromARGB(255, 28, 54, 32);
-      final notifier = ref.watch(gameStateProvider.notifier);
+      const island = Color.fromRGBO(28, 54, 32, 1);
+      final notifier = ref.read(gameStateProvider.notifier);
       final isNowPosition = ref.watch(gameStateProvider.select((value) => value.isNowPosition));
       return GridView.count(
         crossAxisCount: numOfLines,

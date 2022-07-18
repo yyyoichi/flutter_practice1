@@ -5,28 +5,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class Gaming {
   final bool isA;
   final bool isLoading;
-  final List<History> aHistories;
-  final List<History> bHistories;
+  final List<History> histories;
 
   const Gaming(
       {this.isA = true,
       this.isLoading = false,
-      this.aHistories = const <History>[],
-      this.bHistories = const <History>[]});
+      this.histories = const <History>[]});
 
   Gaming copyWith(
       {bool? isA,
       bool? isLoading,
-      List<History>? aHistories,
-      List<History>? bHistories}) {
+      List<History>? histories}) {
     return Gaming(
         isA: isA ?? this.isA,
         isLoading: isLoading ?? this.isLoading,
-        aHistories: aHistories ?? this.aHistories,
-        bHistories: bHistories ?? this.bHistories);
+        histories: histories ?? this.histories);
   }
   History? getLatestMoveHistory() {
-    List<History> histories = isA ?aHistories : bHistories;
     /// 移動前の履歴
     for (History hist in histories) {
       if (hist.isA == isA && hist.type == "move") {
@@ -144,15 +139,7 @@ class GameNotifier extends StateNotifier<Gaming> {
     bool isA = state.isA;
     History history = History(direction, type, position, isA, step);
     debugPrint("newHistory: ${history.toString()}");
-    if (isA) {
-      List<History> histories = [...state.aHistories];
-      histories.insert(0, history);
-      state = state.copyWith(aHistories: histories);
-    } else {
-      List<History> histories = [...state.bHistories];
-      histories.insert(0, history);
-      state = state.copyWith(bHistories: histories);
-    }
+    state = state.copyWith(histories: [history, ...state.histories]);
     return true;
   }
    /// 移動可能な場所かを返す
