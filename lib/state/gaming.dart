@@ -25,6 +25,25 @@ class Gaming {
         aHistories: aHistories ?? this.aHistories,
         bHistories: bHistories ?? this.bHistories);
   }
+  History? getLatestMoveHistory() {
+    List<History> histories = isA ?aHistories : bHistories;
+    /// 移動前の履歴
+    for (History hist in histories) {
+      if (hist.isA == isA && hist.type == "move") {
+        return hist;
+      }
+    }
+    return null;
+  }
+  bool isNowPosition(int row, int column) {
+    History? history = getLatestMoveHistory();
+    if(history == null) {
+      return false;
+    }
+    Position targetPosition = Position(row, column);
+    Position position = history.position;
+    return position.equals(targetPosition);
+  }
 }
 
 @immutable
@@ -108,7 +127,7 @@ class GameNotifier extends StateNotifier<Gaming> {
   Future<bool> put(int row, int column, int step) async {
     Direction direction;
     Position position = Position(row, column);
-    History? prevHistory = _getLatestMoveHistory();
+    History? prevHistory = state.getLatestMoveHistory();
     if (prevHistory == null) {
       direction = Direction(0, 0);
     } else {
@@ -136,18 +155,7 @@ class GameNotifier extends StateNotifier<Gaming> {
     }
     return true;
   }
-
-  History? _getLatestMoveHistory() {
-    List<History> histories = state.isA ? state.aHistories : state.bHistories;
-    /// 移動前の履歴
-    for (History hist in histories) {
-      if (hist.isA == state.isA && hist.type == "move") {
-        return hist;
-      }
-    }
-    return null;
-  }
-  /// 移動可能な場所かを返す
+   /// 移動可能な場所かを返す
   Future<bool> _canPut(Position nextPosition, Position prevPosition, int step) async {
     /// 移動可能な方向を順に取得
     await for (Direction d in Direction.getAll()) {

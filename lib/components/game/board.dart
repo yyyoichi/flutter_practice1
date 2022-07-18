@@ -11,9 +11,11 @@ class Board extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: ((context, ref, child) {
+      const now = Color.fromRGBO(190, 40, 30, 1);
       const sea = Color.fromARGB(255, 131, 134, 172);
       const island = Color.fromARGB(255, 28, 54, 32);
       final notifier = ref.watch(gameStateProvider.notifier);
+      final isNowPosition = ref.watch(gameStateProvider.select((value) => value.isNowPosition));
       return GridView.count(
         crossAxisCount: numOfLines,
         crossAxisSpacing: 3.0,
@@ -24,19 +26,23 @@ class Board extends StatelessWidget {
           final isIaland = posIslands.contains(index);
           return GestureDetector(
             onTap: () async {
-              if(isIaland) {
+              if (isIaland) {
                 //島はタップ無効
-                return ;
+                return;
               }
               bool result = await notifier.put(row, column, 1);
-              if(result) {
+              if (result) {
                 notifier.changePlayer();
               } else {
                 debugPrint("\t 置けない場所です!");
               }
             },
             child: Container(
-              color: isIaland ? island : sea,
+              color: isNowPosition(row, column)
+                  ? now
+                  : isIaland
+                      ? island
+                      : sea,
               width: 50.0,
               height: 50.0,
             ),
