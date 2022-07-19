@@ -177,7 +177,7 @@ class GameNotifier extends StateNotifier<Gaming> {
     Position position = Position(row, column);
     if (position.equals(optHistory.position)) return "over";
     if (await _nextPut(position, optHistory.position, 1)) return "near";
-    return "";
+    return "safe";
   }
 }
 
