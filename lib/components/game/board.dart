@@ -37,9 +37,9 @@ class Board extends StatelessWidget {
                           onPressed: () {
                             void action() async {
                               if (isIaland) return;
-                              bool success =
-                                  await notifier.put(row, column, "move", 1);
-                              if (success) {
+                              Function? success = await notifier.put(row, column, "move", 1);
+                              if (success != null) {
+                                success("safe");
                                 notifier.changePlayer();
                               }
                             }
@@ -52,9 +52,8 @@ class Board extends StatelessWidget {
                           onPressed: () {
                             void action() async {
                               if (isIaland) return;
-                              bool success =
-                                  await notifier.put(row, column, "atack", 1);
-                              if (!success) return;
+                              Function? success = await notifier.put(row, column, "atack", 1);
+                              if (success == null) return;
                               String atackResult =
                                   await notifier.atackResulut(row, column);
                               if (atackResult == "over") {
@@ -64,6 +63,7 @@ class Board extends StatelessWidget {
                               } else {
                                 debugPrint("ヨーソロー！");
                               }
+                              success(atackResult);
                               notifier.changePlayer();
                             }
                             Navigator.pop(childContext);
