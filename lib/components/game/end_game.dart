@@ -10,26 +10,25 @@ class EndGame extends StatelessWidget {
     return Consumer(builder: (context, ref, child) {
       final ended = ref.watch(gameStateProvider.select((value) => value.ended));
       return ended
-          ? Expanded(
-              child: DecoratedBox(
-                  decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 255, 255, 255)),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const _Winner(),
-                          TextButton(
-                              child: const Text("TOP =>"),
-                              onPressed: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  '/',
-                                );
-                              })
-                        ]),
-                  )))
+          ? DecoratedBox(
+              decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 255, 255, 255)),
+              child: SizedBox(
+                width: double.infinity,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const _Winner(),
+                      TextButton(
+                          child: const Text("TOP =>"),
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              '/',
+                            );
+                          })
+                    ]),
+              ))
           : const SizedBox.shrink();
     });
   }

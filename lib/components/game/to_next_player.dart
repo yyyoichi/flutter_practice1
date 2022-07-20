@@ -10,18 +10,17 @@ class ToNextPlayer extends StatelessWidget {
       final isLoading =
           ref.watch(gameStateProvider.select((value) => value.isLoading));
       return isLoading
-          ? Expanded(
-              child: DecoratedBox(
-                  decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 255, 255, 255)),
-                  // margin:
-                  //     const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [_NextPlayer(), _ToNext()]),
-                  )))
+          ? DecoratedBox(
+              decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 255, 255, 255)),
+              // margin:
+              //     const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+              child: SizedBox(
+                width: double.infinity,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [_NextPlayer(), _ToNext()]),
+              ))
           : const SizedBox.shrink();
     }));
   }
