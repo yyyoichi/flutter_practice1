@@ -5,17 +5,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class Gaming {
   final bool isA;
   final bool isLoading;
+  final bool ended;
   final List<History> histories;
 
   const Gaming(
       {this.isA = true,
       this.isLoading = false,
+      this.ended = false,
       this.histories = const <History>[]});
 
-  Gaming copyWith({bool? isA, bool? isLoading, List<History>? histories}) {
+  Gaming copyWith({bool? isA, bool? isLoading, bool? ended, List<History>? histories}) {
     return Gaming(
         isA: isA ?? this.isA,
         isLoading: isLoading ?? this.isLoading,
+        ended: ended ?? this.ended,
         histories: histories ?? this.histories);
   }
 
@@ -151,7 +154,7 @@ class GameNotifier extends StateNotifier<Gaming> {
     return (String result) {
       History history = History(direction, type, position, isA, step, "safe");
       debugPrint("newHistory: ${history.toString()}");
-      state = state.copyWith(histories: [history, ...state.histories]);
+      state = state.copyWith(histories: [history, ...state.histories], ended: result == "over" ? true: false);
     };
   }
 
