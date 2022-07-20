@@ -58,6 +58,8 @@ class Board extends StatelessWidget {
                                   await notifier.atackResulut(row, column);
                               if (atackResult == "over") {
                                 debugPrint("直撃！");
+                                success(atackResult);
+                                return;
                               } else if (atackResult == "near") {
                                 debugPrint("面舵一杯！");
                               } else {

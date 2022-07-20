@@ -182,6 +182,13 @@ class GameNotifier extends StateNotifier<Gaming> {
     if (await _nextPut(position, optHistory.position, 1)) return "near";
     return "safe";
   }
+
+  String? getWinner() {
+    if(state.ended == false) return null;
+    History history = state.histories[0];
+    bool isA = history.isA;
+    return isA ? "A" : "B";
+  }
 }
 
 final gameStateProvider = StateNotifierProvider<GameNotifier, Gaming>((ref) {

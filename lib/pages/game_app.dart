@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/empty_app_bar.dart';
 import 'package:flutter_application_1/components/game/board.dart';
+import 'package:flutter_application_1/components/game/end_game.dart';
 import 'package:flutter_application_1/components/game/to_next_player.dart';
 import 'package:flutter_application_1/state/game_parameter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,7 +28,8 @@ class GameApp extends StatelessWidget {
                           posIslands: args.positionsOfIsland,
                         ))),
               ]),
-              const ToNextPlayer()
+              const ToNextPlayer(),
+              const EndGame()
             ])));
   }
 }
