@@ -15,7 +15,15 @@ class GameHistory extends StatelessWidget {
       return ListView.builder(
           itemCount: histories.length,
           itemBuilder: (context, index) {
-            return ListTile(title: Text(histories[index].toString()));
+            History history = histories[index];
+            return Container(
+              margin: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 2.0),
+              height: 10.0,
+              child: Row(children: [
+                Text(history.position.getA1Notation()),
+                Text(history.direction.toString())
+              ]),
+            );
           });
     }));
   }
