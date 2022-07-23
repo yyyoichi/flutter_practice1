@@ -16,26 +16,35 @@ class GameApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProviderScope(
-        child: Scaffold(
-            appBar: const EmptyAppBar(),
-            body: Stack(children: [
-              Column(children: [
-                Expanded(
-                    child: Container(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 15.0),
-                        child: Board(
-                          numOfLines: args.numOfLines,
-                          posIslands: args.positionsOfIsland,
-                        ))),
-                Expanded(
-                    child: Container(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 15.0),
-                        child: const GameHistory())),
-              ]),
-              const ToNextPlayer(),
-              const EndGame()
-            ])));
+        child: SafeArea(
+            child: Scaffold(
+                appBar: const EmptyAppBar(),
+                body: Stack(children: [
+                  Column(children: [
+                    Row(children: [
+                      Expanded(
+                          child: Container(
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 15.0),
+                              child: Board(
+                                numOfLines: args.numOfLines,
+                                posIslands: args.positionsOfIsland,
+                              )))
+                    ]),
+                    Flexible(
+                        // flex: 1,
+                        child: Container(
+                            margin: const EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 15.0),
+                            child: const GameHistory())),
+                    // Flexible(
+                    //     child: Container(
+                    //         margin: const EdgeInsets.symmetric(
+                    //             vertical: 10.0, horizontal: 15.0),
+                    //         child: const GameHistory())),
+                  ]),
+                  const ToNextPlayer(),
+                  const EndGame()
+                ]))));
   }
 }
