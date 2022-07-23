@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/components/history_item.dart';
 import 'package:flutter_application_1/state/gaming.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,18 +14,18 @@ class GameHistory extends StatelessWidget {
           ref.watch(gameStateProvider.select((value) => value.histories));
 
       return ListView.builder(
-          itemCount: histories.length,
-          itemBuilder: (context, index) {
-            History history = histories[index];
-            return Container(
-              margin: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 2.0),
-              height: 10.0,
-              child: Row(children: [
-                Text(history.position.getA1Notation()),
-                Text(history.direction.toString())
-              ]),
-            );
-          });
+        shrinkWrap: false, // <- added
+        primary: false,
+        itemCount: histories.length,
+        itemBuilder: (context, index) {
+          History history = histories[index];
+          return Container(
+            margin: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 2.0),
+            height: 10.0,
+            child: HistoryItem(history: history, isMe: true),
+          );
+        },
+      );
     }));
   }
 }
