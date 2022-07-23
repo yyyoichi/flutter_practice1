@@ -20,6 +20,9 @@ class Board extends StatelessWidget {
         crossAxisCount: numOfLines,
         crossAxisSpacing: 3.0,
         mainAxisSpacing: 3.0,
+        primary: false,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         children: List.generate(numOfLines * numOfLines, (index) {
           final column = index % numOfLines;
           final row = index ~/ numOfLines;
@@ -37,12 +40,14 @@ class Board extends StatelessWidget {
                           onPressed: () {
                             void action() async {
                               if (isIaland) return;
-                              Function? success = await notifier.put(row, column, "move", 1);
+                              Function? success =
+                                  await notifier.put(row, column, "move", 1);
                               if (success != null) {
                                 success("safe");
                                 notifier.changePlayer();
                               }
                             }
+
                             Navigator.pop(childContext);
                             action();
                           },
@@ -52,7 +57,8 @@ class Board extends StatelessWidget {
                           onPressed: () {
                             void action() async {
                               if (isIaland) return;
-                              Function? success = await notifier.put(row, column, "atack", 1);
+                              Function? success =
+                                  await notifier.put(row, column, "atack", 1);
                               if (success == null) return;
                               String atackResult =
                                   await notifier.atackResulut(row, column);
@@ -68,6 +74,7 @@ class Board extends StatelessWidget {
                               success(atackResult);
                               notifier.changePlayer();
                             }
+
                             Navigator.pop(childContext);
                             action();
                           },
@@ -82,8 +89,8 @@ class Board extends StatelessWidget {
                   : isIaland
                       ? island
                       : sea,
-              width: 50.0,
-              height: 50.0,
+              // width: 50.0,
+              // height: 50.0,
             ),
           );
         }),
