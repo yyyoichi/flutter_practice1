@@ -164,7 +164,7 @@ class GameNotifier extends StateNotifier<Gaming> {
     }
     bool isA = state.isA;
     return (String result) {
-      History history = History(direction, type, position, isA, step, "safe");
+      History history = History(direction, type, position, isA, step, result);
       debugPrint("newHistory: ${history.toString()}");
       state = state.copyWith(histories: [history, ...state.histories], ended: result == "over" ? true: false);
     };
