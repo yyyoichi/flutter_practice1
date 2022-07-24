@@ -12,10 +12,11 @@ class GameHistory extends StatelessWidget {
       // final isA = ref.watch(gameStateProvider.select((value) => value.isA));
       final histories =
           ref.watch(gameStateProvider.select((value) => value.histories));
-
+      debugPrint("render!");
       return ListView.builder(
         shrinkWrap: false, // <- added
         primary: false,
+        itemExtent: 50.0,
         itemCount: histories.length,
         itemBuilder: (context, index) {
           History history = histories[index];

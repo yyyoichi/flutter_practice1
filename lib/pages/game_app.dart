@@ -37,11 +37,6 @@ class GameApp extends StatelessWidget {
                             margin: const EdgeInsets.symmetric(
                                 vertical: 10.0, horizontal: 15.0),
                             child: const GameHistory())),
-                    // Flexible(
-                    //     child: Container(
-                    //         margin: const EdgeInsets.symmetric(
-                    //             vertical: 10.0, horizontal: 15.0),
-                    //         child: const GameHistory())),
                   ]),
                   const ToNextPlayer(),
                   const EndGame()
