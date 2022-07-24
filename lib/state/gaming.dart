@@ -14,7 +14,8 @@ class Gaming {
       this.ended = false,
       this.histories = const <History>[]});
 
-  Gaming copyWith({bool? isA, bool? isLoading, bool? ended, List<History>? histories}) {
+  Gaming copyWith(
+      {bool? isA, bool? isLoading, bool? ended, List<History>? histories}) {
     return Gaming(
         isA: isA ?? this.isA,
         isLoading: isLoading ?? this.isLoading,
@@ -88,6 +89,7 @@ class Direction {
     bool isRange(n) {
       return -1 <= n && n <= 1;
     }
+
     if (isRange(x) && isRange(y)) {
       this.x = x;
       this.y = y;
@@ -99,6 +101,7 @@ class Direction {
   String toString() {
     return Direction.yaji[y + 1][x + 1];
   }
+
   static Stream<Direction> getAll() async* {
     for (int x = -1; x <= 1; x++) {
       for (int y = -1; y <= 1; y++) {
@@ -114,20 +117,33 @@ class Direction {
 class Position {
   final int row;
   final int column;
-  static List<String> alphabet = ["A","B","C","D","E","F","G","H","I","J","K"];
+  static List<String> alphabet = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K"
+  ];
   Position(this.row, this.column);
   nextTo({required Direction direction, int howMany = 1}) {
     int r = row + (direction.x * howMany);
     int c = column + (direction.y * howMany);
     return Position(r, c);
   }
+
   String getA1Notation() {
-    return "${Position.alphabet[row]}${column+1}";
+    return "${Position.alphabet[row]}${column + 1}";
   }
 
   Direction wayFrom({required Position pos, int howMany = 1}) {
-    final x = (pos.row - row) ~/ howMany;
-    final y = (pos.column - column) ~/ howMany;
+    final x = (pos.column - column) ~/ howMany;
+    final y = (pos.row - row) ~/ howMany;
     return Direction(x, y);
   }
 
@@ -166,7 +182,9 @@ class GameNotifier extends StateNotifier<Gaming> {
     return (String result) {
       History history = History(direction, type, position, isA, step, result);
       debugPrint("newHistory: ${history.toString()}");
-      state = state.copyWith(histories: [history, ...state.histories], ended: result == "over" ? true: false);
+      state = state.copyWith(
+          histories: [history, ...state.histories],
+          ended: result == "over" ? true : false);
     };
   }
 
@@ -196,7 +214,7 @@ class GameNotifier extends StateNotifier<Gaming> {
   }
 
   String? getWinner() {
-    if(state.ended == false) return null;
+    if (state.ended == false) return null;
     History history = state.histories[0];
     bool isA = history.isA;
     return isA ? "A" : "B";
