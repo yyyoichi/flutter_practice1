@@ -19,7 +19,6 @@ class GameSetting extends StatelessWidget {
               Container(
                   margin: const EdgeInsets.all(5.0),
                   child: const Expanded(child: SettingField())),
-              const GoToGame(),
               Container(
                 margin:
                     const EdgeInsets.symmetric(vertical: 5.0, horizontal: 3.0),
@@ -29,7 +28,8 @@ class GameSetting extends StatelessWidget {
                 margin:
                     const EdgeInsets.symmetric(vertical: 5.0, horizontal: 3.0),
                 child: const IslandNumSlider(),
-              )
+              ),
+              const GoToGame(),
             ]))));
   }
 }

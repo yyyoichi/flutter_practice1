@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       // theme: ThemeData.from(colorScheme: ColorScheme.fromSwatch(
       //   primarySwatch: Colors.brown,
       // )),
-      initialRoute: "/game",
+      initialRoute: "/",
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }

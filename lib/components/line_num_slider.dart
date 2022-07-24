@@ -14,9 +14,9 @@ class LineNumSlider extends StatelessWidget {
       return Slider(
         label: 'フィールド: $num',
         min: 4,
-        max: 9,
+        max: 6,
         value: num.toDouble(),
-        divisions: 5,
+        divisions: 2,
         onChanged: notifier.onChangeLines,
       );
     }));

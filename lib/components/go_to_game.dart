@@ -12,7 +12,7 @@ class GoToGame extends StatelessWidget {
       final num = ref.watch(riverpodTableProvider.select((value) => value.numOfLines));
       final position = ref.watch(riverpodTableProvider.select((value) => value.positionsOfIsland));
       return TextButton(
-          child: const Text("next =>"),
+          child: const Text("Start =>"),
           onPressed: () {
             Navigator.pushNamed(
               context,

@@ -12,7 +12,7 @@ class RiverpodTableState {
   const RiverpodTableState(
       {this.numOfLines = 5,
       this.positionsOfIsland = const <int>{3, 18},
-      this.maxOfIsland = 2});
+      this.maxOfIsland = 5});
   RiverpodTableState copyWith(
       {int? numOfLines, Set<int>? positionsOfIsland, int? maxOfIsland}) {
     return RiverpodTableState(
@@ -56,7 +56,7 @@ class RiverpodTableStateNotifier extends StateNotifier<RiverpodTableState> {
 
   int getMaxIsland(nowNumOfLines) {
     final int numOfCeil = nowNumOfLines * nowNumOfLines;
-    final int limit = (numOfCeil * 0.1).floor();
+    final int limit = (numOfCeil * 0.2).floor();
     return limit;
   }
 }
