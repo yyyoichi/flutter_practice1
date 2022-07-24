@@ -6,7 +6,8 @@ class HistoryItem extends StatelessWidget {
   final History history;
   final bool isMe;
 
-  const HistoryItem({Key? key, required this.history, required this.isMe}) : super(key: key);
+  const HistoryItem({Key? key, required this.history, required this.isMe})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,21 +17,72 @@ class HistoryItem extends StatelessWidget {
           decoration: const BoxDecoration(
               border:
                   Border(bottom: BorderSide(width: 1.0, color: Colors.grey))),
-          child: Row(
-            children: <Widget>[
-              Container(
-                margin: const EdgeInsets.all(10.0),
-                child: const Text("A"),
-              ),
-              Text(
-                history.toString(),
-                style: const TextStyle(color: Colors.black, fontSize: 18.0),
-              ),
-            ],
-          )),
+          child: isMe ? _me(context) : _they(context)),
       onTap: () {
         debugPrint("onTap called.");
       },
+    );
+  }
+
+  Widget _me(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+            flex: 1,
+            child: Text(
+              history.direction.toString(),
+              style: const TextStyle(fontSize: 30.0),
+            )),
+        Expanded(
+            flex: 4,
+            child: Text(
+              history.type,
+              style: const TextStyle(fontSize: 30.0),
+            )),
+        Expanded(
+            flex: 3,
+            child: Text(
+              history.position.getA1Notation(),
+              style: const TextStyle(color: Colors.black, fontSize: 30.0),
+            )),
+        Expanded(
+            flex: 2,
+            child: Text(
+              history.type == "atack" ? history.result : "",
+              style: const TextStyle(color: Colors.black, fontSize: 30.0),
+            ))
+      ],
+    );
+  }
+
+  Widget _they(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+            flex: 1,
+            child: Text(
+              history.direction.toString(),
+              style: const TextStyle(fontSize: 30.0),
+            )),
+        Expanded(
+            flex: 4,
+            child: Text(
+              history.type,
+              style: const TextStyle(fontSize: 30.0),
+            )),
+        Expanded(
+            flex: 3,
+            child: Text(
+              history.type == "move" ? "" : history.position.getA1Notation(),
+              style: const TextStyle(color: Colors.black, fontSize: 30.0),
+            )),
+        Expanded(
+            flex: 2,
+            child: Text(
+              history.type == "atack" ? history.result : "",
+              style: const TextStyle(color: Colors.black, fontSize: 30.0),
+            ))
+      ],
     );
   }
 }
