@@ -167,6 +167,9 @@ class GameNotifier extends StateNotifier<Gaming> {
     Position position = Position(row, column);
     History? prevHistory = state.getLatestMoveHistory();
     if (prevHistory == null) {
+      if(type == "atack") {
+        return null;
+      }
       direction = Direction(0, 0);
     } else {
       /// 過去に移動した履歴がある
