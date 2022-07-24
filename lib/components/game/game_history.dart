@@ -12,6 +12,8 @@ class GameHistory extends StatelessWidget {
       // final isA = ref.watch(gameStateProvider.select((value) => value.isA));
       final histories =
           ref.watch(gameStateProvider.select((value) => value.histories));
+      final nowPlayerIsA =
+          ref.watch(gameStateProvider.select((value) => value.isA));
       debugPrint("render!");
       return ListView.builder(
         shrinkWrap: false, // <- added
@@ -23,7 +25,8 @@ class GameHistory extends StatelessWidget {
           return Container(
             margin: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 2.0),
             height: 10.0,
-            child: HistoryItem(history: history, isMe: true),
+            child: HistoryItem(
+                history: history, isMe: history.isA == nowPlayerIsA),
           );
         },
       );
