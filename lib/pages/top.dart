@@ -15,7 +15,7 @@ class Top extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(
                       vertical: 10.0, horizontal: 25.0),
                   child: TextButton(
-                      child: const Text("go game =>"),
+                      child: const Text("Game Start =>"),
                       onPressed: () {
                         Navigator.pushNamed(
                           context,
