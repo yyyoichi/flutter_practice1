@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/components/history_item.dart';
 import 'package:flutter_application_1/state/gaming.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,6 +10,8 @@ class EndGame extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, child) {
       final ended = ref.watch(gameStateProvider.select((value) => value.ended));
+      final histories =
+          ref.watch(gameStateProvider.select((value) => value.histories));
       return ended
           ? DecoratedBox(
               decoration: const BoxDecoration(
@@ -26,7 +29,23 @@ class EndGame extends StatelessWidget {
                               context,
                               '/',
                             );
-                          })
+                          }),
+                      Expanded(
+                          child: ListView.builder(
+                        shrinkWrap: false, // <- added
+                        primary: false,
+                        itemExtent: 50.0,
+                        itemCount: histories.length,
+                        itemBuilder: (context, index) {
+                          History history = histories[index];
+                          return Container(
+                            margin: const EdgeInsets.symmetric(
+                                vertical: 1.0, horizontal: 2.0),
+                            height: 10.0,
+                            child: HistoryItem(history: history, isMe: true),
+                          );
+                        },
+                      ))
                     ]),
               ))
           : const SizedBox.shrink();
