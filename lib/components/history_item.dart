@@ -5,8 +5,9 @@ import '../state/gaming.dart';
 class HistoryItem extends StatelessWidget {
   final History history;
   final bool isMe;
+  final bool isGrey;
 
-  const HistoryItem({Key? key, required this.history, required this.isMe})
+  const HistoryItem({Key? key, required this.history, required this.isMe, required this.isGrey })
       : super(key: key);
 
   @override

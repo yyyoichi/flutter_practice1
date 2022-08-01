@@ -42,7 +42,7 @@ class EndGame extends StatelessWidget {
                             margin: const EdgeInsets.symmetric(
                                 vertical: 1.0, horizontal: 2.0),
                             height: 10.0,
-                            child: HistoryItem(history: history, isMe: true),
+                            child: HistoryItem(history: history, isMe: true, isGrey: index%2 == 0),
                           );
                         },
                       ))

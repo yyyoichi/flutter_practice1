@@ -26,7 +26,7 @@ class GameHistory extends StatelessWidget {
             margin: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 2.0),
             height: 10.0,
             child: HistoryItem(
-                history: history, isMe: history.isA == nowPlayerIsA),
+                history: history, isMe: history.isA == nowPlayerIsA, isGrey: index%2 == 0),
           );
         },
       );
