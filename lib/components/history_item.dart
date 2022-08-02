@@ -7,23 +7,22 @@ class HistoryItem extends StatelessWidget {
   final bool isMe;
   final bool isGrey;
 
-  const HistoryItem({Key? key, required this.history, required this.isMe, required this.isGrey })
+  const HistoryItem(
+      {Key? key,
+      required this.history,
+      required this.isMe,
+      required this.isGrey})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Container(
-          padding: const EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
+    return Container(
+        padding: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
             color: isMe ? Colors.grey : Colors.white,
-              border:
-                  const Border(bottom: BorderSide(width: 1.0, color: Colors.grey))),
-          child: isMe ? _me(context) : _they(context)),
-      onTap: () {
-        debugPrint("onTap called.");
-      },
-    );
+            border: const Border(
+                bottom: BorderSide(width: 1.0, color: Colors.grey))),
+        child: isMe ? _me(context) : _they(context));
   }
 
   Widget _me(BuildContext context) {
