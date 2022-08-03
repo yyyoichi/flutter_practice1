@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/components/empty_app_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Top extends StatelessWidget {
@@ -9,7 +10,7 @@ class Top extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProviderScope(
         child: Scaffold(
-            appBar: AppBar(title: const Text("Reverpod.")),
+            appBar: const EmptyAppBar(),
             body: Consumer(builder: ((context, ref, child) {
               return Container(
                   margin: const EdgeInsets.symmetric(
